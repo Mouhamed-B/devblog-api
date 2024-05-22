@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=cldztbc4jg&xl0!x673!*v2_=p$$eu)=7*f#d0#zs$44xx-h^'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-=cldztbc4jg&xl0!x673!*v2_=p$$eu)=7*f#d0#zs$44xx-h^')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True')
@@ -84,9 +87,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('POSTGRES_DB','devblogdb'),
         'USER': os.environ.get('POSTGRES_USER','postgres'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD','postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD',''),
         'HOST': os.environ.get('POSTGRES_HOST','localhost'),
-        'PORT': '5432'
+        'PORT': os.environ.get('POSTGRES_PORT','5432')
     }
 }
 
