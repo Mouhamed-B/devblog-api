@@ -1,9 +1,14 @@
-# devblog_api/urls.py
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
+from .views import PostViewSet
 
-from devblog_api.views import index
+router = routers.DefaultRouter()
+router.register(r'posts', PostViewSet)
 
-
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', index),
+    path('', include(router.urls)),
 ]
+
+urlpatterns += router.urls
