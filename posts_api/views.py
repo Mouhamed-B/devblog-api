@@ -1,11 +1,10 @@
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework_simplejwt.authentication import JWTStatelessUserAuthentication
 from .models import Post
 from .serializers import PostSerializer
 from .permissions import IsAuthorOrReadOnly
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -15,23 +14,10 @@ class PostViewSet(viewsets.ModelViewSet):
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly,IsAuthorOrReadOnly]
     authentication_classes = [JWTStatelessUserAuthentication]
     
-    def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        if self.action == 'create':
-            permission_classes = [IsAuthenticated]
-        else:
-            permission_classes = [IsAuthorOrReadOnly]
-        return [permission() for permission in permission_classes]
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        try:
-            serializer.is_valid(raise_exception=True)
-            serializer.save(author=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        id = self.request.user.token['user_id']
+        user = User.objects.get(id=id)
+        serializer.save(author=user)
