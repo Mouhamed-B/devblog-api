@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'auth_api',
     'posts_api',
+    'authors_api',
     'drf_spectacular'
 ]
 
