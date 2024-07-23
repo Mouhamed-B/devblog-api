@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
-
+from django.contrib.auth.models import User
 
 class IsAuthorOrReadOnly(BasePermission):
     """
@@ -11,6 +11,9 @@ class IsAuthorOrReadOnly(BasePermission):
         # so we'll always allow GET, HEAD or OPTIONS requests.
         if request.method in SAFE_METHODS:
             return True
-
+        
+        id = request.user.token['user_id']
+        user = User.objects.get(id=id)
+        
         # Write permissions are only allowed to the owner of the snippet.
-        return obj.author == request.user
+        return obj.author == user
