@@ -25,7 +25,7 @@ class PostViewSet(viewsets.ModelViewSet):
         detail=True,
         methods=["POST"],
         parser_classes=[MultiPartParser],
-        url_path=r"upload/",
+        url_path=r"upload",
     )
     def upload(self, request, **kwargs):
         post = self.get_object()
