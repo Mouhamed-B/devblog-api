@@ -32,6 +32,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(','
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Application definition
 
@@ -142,6 +143,11 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
 }
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID',None)
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY',None)
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME',None)
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL',None)
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
