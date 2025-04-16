@@ -1,24 +1,97 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+# DevBlog API
 
-# Django + Vercel
+## Overview
+DevBlog API is a Django-based RESTful API for managing blog posts, user authentication, and more.
 
-This example shows how to use Django 4 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+## Table of Contents
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
+- [License](#license)
+
+## Installation
+
+Follow these steps to set up the project locally:
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Mouhamed-B/devblog-api.git
+   cd devblog-api
+   ```
+
+2. **Create a Virtual Environment**
+   It is recommended to use a virtual environment to manage dependencies.
+   ```bash
+   python -m venv .venv
+   ```
+
+3. **Activate the Virtual Environment**
+   - On Windows:
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - On macOS/Linux:
+     ```bash
+     source .venv/bin/activate
+     ```
+
+4. **Install Dependencies**
+   Install the required packages using pip:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Set Up Environment Variables**
+   Create a `.env` file in the root directory and add the necessary environment variables. You can use `.env.example` as a reference.
+
+6. **Run Migrations**
+   Apply the database migrations:
+   ```bash
+   python manage.py migrate
+   ```
+
+7. **Create a Superuser (Optional)**
+   If you want to access the Django admin panel, create a superuser:
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+## Running the Application
+
+To start the development server, run:
+```bash
+python manage.py runserver
+```
+The application will be available at `http://127.0.0.1:8000/`.
+
+## API Endpoints
+
+Swagger UI for the API documentation available at `http://127.0.0.1:8000/api/schema/swagger-ui/`
+
+- **User Registration**: `POST /api/register/`
+- **User Login**: `POST /api/login/`
+- **Create Post**: `POST /api/posts/`
+- **Update Post**: `PUT /api/posts/{id}/`
+- **Retrieve Post**: `GET /api/posts/{id}/`
+
+Refer to the API documentation for more details on request and response formats.
+
+## Testing
+
+To run the tests, use the following command:
+```bash
+python manage.py test
+```
 
 ## Demo
 
-https://django-template.vercel.app/
+https://devblog-api.vercel.app/
+
+https://devblog-api.vercel.app/api/schema/swagger-ui/
 
 ## How it Works
 
-Our Django application, `example` is configured as an installed application in `api/settings.py`:
-
-```python
-# api/settings.py
-INSTALLED_APPS = [
-    # ...
-    'example',
-]
-```
 
 We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
 
@@ -40,67 +113,3 @@ The corresponding `WSGI_APPLICATION` setting is configured to use the `app` vari
 # api/settings.py
 WSGI_APPLICATION = 'api.wsgi.app'
 ```
-
-There is a single view which renders the current time in `example/views.py`:
-
-```python
-# example/views.py
-from datetime import datetime
-
-from django.http import HttpResponse
-
-
-def index(request):
-    now = datetime.now()
-    html = f'''
-    <html>
-        <body>
-            <h1>Hello from Vercel!</h1>
-            <p>The current time is { now }.</p>
-        </body>
-    </html>
-    '''
-    return HttpResponse(html)
-```
-
-This view is exposed a URL through `example/urls.py`:
-
-```python
-# example/urls.py
-from django.urls import path
-
-from example.views import index
-
-
-urlpatterns = [
-    path('', index),
-]
-```
-
-Finally, it's made accessible to the Django server inside `api/urls.py`:
-
-```python
-# api/urls.py
-from django.urls import path, include
-
-urlpatterns = [
-    ...
-    path('', include('example.urls')),
-]
-```
-
-This example uses the Web Server Gateway Interface (WSGI) with Django to enable handling requests on Vercel with Serverless Functions.
-
-## Running Locally
-
-```bash
-python manage.py runserver
-```
-
-Your Django application is now available at `http://localhost:8000`.
-
-## One-Click Deploy
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
