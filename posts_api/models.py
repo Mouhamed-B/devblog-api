@@ -7,7 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(blank=True)
     image = models.ImageField(null=True,blank=True)
-    description = models.CharField(max_length=256)
+    description = models.CharField(max_length=256,null=True)
     content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, related_name='posts',on_delete=models.CASCADE)
